@@ -1,0 +1,44 @@
+<style>
+  span.header {
+    font-size: 0.8em;
+    font-style: italic;
+  }
+</style>
+
+<hr />
+
+<h1>
+  <%= l(:text_issue_updated,
+        id: link_to("#{@issue.tracker.name} ##{@issue.id}: #{@issue.subject}", @issue_url),
+        author: link_to(@journal.user.name, user_path(@journal.user))
+      ).html_safe %>
+</h1>
+
+<% if @journal.private_notes? %>
+  (<%= l(:field_private_notes) %>)
+<% end %>
+
+<%
+  content = textilizable(@journal, :notes, :only_path => false)
+
+  unless content.blank?
+%>
+  <hr />
+
+  <%= content %>
+
+<% end %>
+
+<%
+  diffs = details_to_strings(@journal_details, false, :only_path => false)
+
+  unless diffs.blank?
+%>
+  <hr />
+
+  <ul class="journal details">
+    <% diffs.each do |string| %>
+      <li><%= string %></li>
+    <% end %>
+  </ul>
+<% end %>
