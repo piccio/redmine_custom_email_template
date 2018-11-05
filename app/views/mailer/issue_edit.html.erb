@@ -19,13 +19,32 @@
 <% end %>
 
 <%
+  status_property = @journal.details.to_a.select{ |x| x.prop_key == 'status_id' }.first
+
+  unless status_property.nil?
+    status_id = status_property.value
+    status = IssueStatus.find(status_id)
+
+    if status.name == 'Closed' || status.name == 'Closed with reserve'
+      description = textilizable(@issue, :description, :only_path => false)
+%>
+        <hr />
+
+        <%= description %>
+
+<%
+    end
+  end
+%>
+
+<%
   content = textilizable(@journal, :notes, :only_path => false)
 
   unless content.blank?
 %>
-  <hr />
+    <hr />
 
-  <%= content %>
+    <%= content %>
 
 <% end %>
 
@@ -34,11 +53,11 @@
 
   unless diffs.blank?
 %>
-  <hr />
+    <hr />
 
-  <ul class="journal details">
-    <% diffs.each do |string| %>
-      <li><%= string %></li>
-    <% end %>
-  </ul>
+    <ul class="journal details">
+      <% diffs.each do |string| %>
+        <li><%= string %></li>
+      <% end %>
+    </ul>
 <% end %>
