@@ -19,6 +19,17 @@
 <% end %>
 
 <%
+  content = textilizable(@journal, :notes, :only_path => false)
+
+  unless content.blank?
+%>
+  <hr />
+
+  <%= content %>
+
+<% end %>
+
+<%
   status_property = @journal.details.to_a.select{ |x| x.prop_key == 'status_id' }.first
 
   unless status_property.nil?
@@ -36,17 +47,6 @@
     end
   end
 %>
-
-<%
-  content = textilizable(@journal, :notes, :only_path => false)
-
-  unless content.blank?
-%>
-    <hr />
-
-    <%= content %>
-
-<% end %>
 
 <%
   diffs = details_to_strings(@journal_details, false, :only_path => false)
