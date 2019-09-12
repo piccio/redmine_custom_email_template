@@ -10,7 +10,7 @@
 <h1>
   <%= l(:text_issue_updated,
         id: link_to("#{@issue.tracker.name} ##{@issue.id}: #{@issue.subject}", @issue_url),
-        author: link_to(@journal.user.name, user_path(@journal.user))
+        author: link_to(@journal.user.name, user_url(@journal.user))
       ).html_safe %>
 </h1>
 

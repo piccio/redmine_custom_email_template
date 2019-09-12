@@ -10,7 +10,7 @@
 <h1>
   <%= l(:text_issue_added,
         id: link_to("#{@issue.tracker.name} ##{@issue.id}: #{@issue.subject}", @issue_url),
-        author: link_to(@issue.author.name, user_path(@issue.author))
+        author: link_to(@issue.author.name, user_url(@issue.author))
       ).html_safe %>
 </h1>
 
@@ -26,7 +26,7 @@
 
 <hr />
 
-<%= render_email_issue_attributes(@issue, @users.first, true) %>
+<%= render_email_issue_attributes(@issue, @user, true) %>
 
 <% if @issue.attachments.any? %>
   <hr />
